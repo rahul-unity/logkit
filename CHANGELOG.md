@@ -1,4 +1,4 @@
-## [0.0.] - 2025-02-04
+## [0.0.1] - 2025-02-04
 ### 🚀 New Features
 - Added **custom log file directory support**.
 - Implemented **log rotation** to keep only the last 7 days of logs.
