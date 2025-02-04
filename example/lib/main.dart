@@ -2,11 +2,15 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:logkit/logkit.dart';
 
-void main() {
-  final logger = UISLogger();
-  logger.log("Flutter logger initialized!");
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(MyApp());
+  final logger = UISLogger();
+  await logger.initializeHive();  // Initialize Hive before logging
+
+  logger.log("App started");
+
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

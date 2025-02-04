@@ -1,60 +1,76 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart' show kIsWeb, defaultTargetPlatform, TargetPlatform;
 import 'package:logger/logger.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:path_provider/path_provider.dart'
-    if (dart.library.io) 'path_provider_io.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
 
 class UISLogger {
   static final UISLogger _instance = UISLogger._internal();
   late Logger _logger;
-  late String _logFilePath;
+  late Box _logBox;
 
   factory UISLogger() {
     return _instance;
   }
 
   UISLogger._internal() {
-    _logger = Logger(
-      printer: PrettyPrinter(),
-    );
-    _initializeLogFile();
+    _logger = Logger(printer: PrettyPrinter());
+    initializeHive();
   }
 
-  Future<void> _initializeLogFile() async {
+  Future<void> initializeHive() async {
     if (kIsWeb) {
-      _logFilePath = 'web_logging_disabled.log';
-      return;
+      return; // Hive doesn't require initialization in web
     }
 
-    if (Platform.isAndroid ||
-        Platform.isIOS ||
-        Platform.isMacOS ||
-        Platform.isLinux ||
-        Platform.isWindows) {
-      final directory = await getApplicationDocumentsDirectory();
-      final logDir = Directory('${directory.path}/logs');
-      if (!logDir.existsSync()) {
-        logDir.createSync(recursive: true);
-      }
+    Directory directory = await getApplicationDocumentsDirectory();
+    Hive.init(directory.path);
 
-      final String logFileName =
-          "${DateTime.now().toIso8601String().split('T').first}.log";
-      _logFilePath = '${logDir.path}/$logFileName';
-    } else {
-      _logFilePath = 'unsupported_platform.log';
-    }
+    _logBox = await Hive.openBox('logs');
+
+    // Check if logs from the previous day exist and delete them
+    _deleteOldLogs();
   }
 
   void log(String message, {Level level = Level.info}) {
+    final String logEntry = "[${DateTime.now().toIso8601String()}] [${level.name}] $message";
+
+    // Delete previous day's logs before inserting a new log
+    _deleteOldLogs();
+
+    // Store log in Hive
+    _logBox.add(logEntry);
+
+    // Print log in console
     _logger.log(level, message);
-    _writeToFile(message, level);
   }
 
-  void _writeToFile(String message, Level level) async {
-    final String logEntry =
-        "[${DateTime.now().toIso8601String()}] [${level.name}] $message\n";
+  void _deleteOldLogs() {
+    if (_logBox.isNotEmpty) {
+      DateTime lastLogTime = DateTime.parse(_logBox.getAt(0).split(']')[0].replaceAll('[', ''));
+      DateTime today = DateTime.now();
 
-    final file = File(_logFilePath);
-    await file.writeAsString(logEntry, mode: FileMode.append);
+      if (lastLogTime.day != today.day) {
+        _logBox.clear(); // Delete all logs if they belong to the previous day
+      }
+    }
+  }
+
+  Future<String> exportLogsToFile() async {
+    Directory directory = await getApplicationDocumentsDirectory();
+    String logFileName = "${DateTime.now().toIso8601String().split('T').first}.log";
+    File logFile = File('${directory.path}/$logFileName');
+
+    StringBuffer logBuffer = StringBuffer();
+    for (var i = 0; i < _logBox.length; i++) {
+      logBuffer.writeln(_logBox.getAt(i));
+    }
+
+    await logFile.writeAsString(logBuffer.toString());
+    return logFile.path;
+  }
+
+  List<String> getAllLogs() {
+    return _logBox.values.cast<String>().toList();
   }
 }
