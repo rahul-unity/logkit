@@ -1,3 +1,12 @@
+## [0.0.3] - 2025-02-05
+### 🛠 Fixes & Improvements
+- Removed **unused imports (`defaultTargetPlatform`, `TargetPlatform`)** to pass static analysis.
+- Improved **code formatting** and **lint compliance**.
+- Ran `flutter analyze` to ensure **0 warnings and errors**.
+- Disabled **file-based logging** when running on WebAssembly (WASM).
+- Ensured **no `dart:io` usage** in WASM environments.
+- `exportLogsToFile()` now gracefully fails on WASM instead of crashing.
+
 ## [0.0.2] - 2025-02-04
 ### 🚀 New Features
 - Integrated **Hive-based log storage** instead of file-based logging.

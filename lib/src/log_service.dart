@@ -1,13 +1,18 @@
 import 'dart:io';
-import 'package:flutter/foundation.dart' show kIsWeb, defaultTargetPlatform, TargetPlatform;
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:logger/logger.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
+
+
 
 class UISLogger {
   static final UISLogger _instance = UISLogger._internal();
   late Logger _logger;
   late Box _logBox;
+
+  /// Use file logging only if not running on WebAssembly
+  final bool _isFileLoggingEnabled = !kIsWeb;
 
   factory UISLogger() {
     return _instance;
@@ -35,14 +40,13 @@ class UISLogger {
   void log(String message, {Level level = Level.info}) {
     final String logEntry = "[${DateTime.now().toIso8601String()}] [${level.name}] $message";
 
-    // Delete previous day's logs before inserting a new log
-    _deleteOldLogs();
-
-    // Store log in Hive
-    _logBox.add(logEntry);
-
-    // Print log in console
+    // Print log in console (always works)
     _logger.log(level, message);
+
+    // Only store logs in Hive if not running in WASM/Web
+    if (_isFileLoggingEnabled) {
+      _logBox.add(logEntry);
+    }
   }
 
   void _deleteOldLogs() {
@@ -57,6 +61,10 @@ class UISLogger {
   }
 
   Future<String> exportLogsToFile() async {
+    if (kIsWeb) {
+      return "Export to file is not supported in WebAssembly (WASM).";
+    }
+
     Directory directory = await getApplicationDocumentsDirectory();
     String logFileName = "${DateTime.now().toIso8601String().split('T').first}.log";
     File logFile = File('${directory.path}/$logFileName');
@@ -69,6 +77,7 @@ class UISLogger {
     await logFile.writeAsString(logBuffer.toString());
     return logFile.path;
   }
+
 
   List<String> getAllLogs() {
     return _logBox.values.cast<String>().toList();
