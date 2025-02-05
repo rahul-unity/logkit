@@ -2,11 +2,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:logkit/logkit.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final logger = UISLogger();
-  await logger.initializeHive();  // Initialize Hive before logging
+  await logger.initializeHive(); // Initialize Hive before logging
 
   logger.log("App started");
 

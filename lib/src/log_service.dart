@@ -4,8 +4,6 @@ import 'package:logger/logger.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 
-
-
 class UISLogger {
   static final UISLogger _instance = UISLogger._internal();
   late Logger _logger;
@@ -38,7 +36,8 @@ class UISLogger {
   }
 
   void log(String message, {Level level = Level.info}) {
-    final String logEntry = "[${DateTime.now().toIso8601String()}] [${level.name}] $message";
+    final String logEntry =
+        "[${DateTime.now().toIso8601String()}] [${level.name}] $message";
 
     // Print log in console (always works)
     _logger.log(level, message);
@@ -51,7 +50,8 @@ class UISLogger {
 
   void _deleteOldLogs() {
     if (_logBox.isNotEmpty) {
-      DateTime lastLogTime = DateTime.parse(_logBox.getAt(0).split(']')[0].replaceAll('[', ''));
+      DateTime lastLogTime =
+          DateTime.parse(_logBox.getAt(0).split(']')[0].replaceAll('[', ''));
       DateTime today = DateTime.now();
 
       if (lastLogTime.day != today.day) {
@@ -66,7 +66,8 @@ class UISLogger {
     }
 
     Directory directory = await getApplicationDocumentsDirectory();
-    String logFileName = "${DateTime.now().toIso8601String().split('T').first}.log";
+    String logFileName =
+        "${DateTime.now().toIso8601String().split('T').first}.log";
     File logFile = File('${directory.path}/$logFileName');
 
     StringBuffer logBuffer = StringBuffer();
@@ -77,7 +78,6 @@ class UISLogger {
     await logFile.writeAsString(logBuffer.toString());
     return logFile.path;
   }
-
 
   List<String> getAllLogs() {
     return _logBox.values.cast<String>().toList();

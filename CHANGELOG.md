@@ -1,3 +1,7 @@
+## [0.0.4] - 2025-02-05
+### 🛠 Fixes & Improvements
+- Improved **code formatting** and **lint compliance**.
+
 ## [0.0.3] - 2025-02-05
 ### 🛠 Fixes & Improvements
 - Removed **unused imports (`defaultTargetPlatform`, `TargetPlatform`)** to pass static analysis.
