@@ -1,3 +1,20 @@
+## [1.0.0] - 2025-02-05
+### 🎉 Stable Release (Production Ready)
+
+- 🚀 First stable release of **LogKit**.
+- ✅ Unified logging for Flutter (mobile, desktop, web).
+- ✅ Hive-based persistent logging with daily log cleanup.
+- ✅ Console logging using the `logger` package.
+- ✅ `exportLogsToFile()` for native platforms.
+- ✅ `exportLogsToWebDownload()` for browser log downloads.
+- ✅ Fully supports WebAssembly (WASM) — no `dart:io` usage in web.
+
+### 🛠 Technical Highlights
+- Uses `Hive` for cross-platform log persistence.
+- Automatically deletes previous day's logs.
+- Lightweight, customizable log levels.
+- Compatible with all Flutter platforms.
+
 ## [0.0.4] - 2025-02-05
 ### 🛠 Fixes & Improvements
 - Improved **code formatting** and **lint compliance**.

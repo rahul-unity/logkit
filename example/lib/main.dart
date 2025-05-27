@@ -1,12 +1,13 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:logkit/logkit.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final logger = UISLogger();
-  await logger.initializeHive(); // Initialize Hive before logging
+  await logger.initialize(); // Initialize Hive before logging
 
   logger.log("App started");
 
@@ -32,11 +33,23 @@ class LoggerScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text("Logger Example")),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            _logRandomMessage();
-          },
-          child: const Text("Generate Random Log"),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                _logRandomMessage();
+              },
+              child: const Text("Generate Random Log"),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () async {
+                await _exportLogs(context);
+              },
+              child: const Text("Export Logs"),
+            ),
+          ],
         ),
       ),
     );
@@ -65,4 +78,25 @@ class LoggerScreen extends StatelessWidget {
     int index = random.nextInt(levels.length);
     logger.log(messages[index], level: levels[index]);
   }
+
+  Future<void> _exportLogs(BuildContext context) async {
+    final logger = UISLogger();
+
+    if (kIsWeb) {
+      logger.exportLogsToWeb();
+
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Logs exported as download.")),
+      );
+    } else {
+      final path = await logger.exportLogsToFile();
+
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Logs exported to: $path")),
+      );
+    }
+  }
+
 }
