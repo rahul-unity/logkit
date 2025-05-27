@@ -1,6 +1,6 @@
 name: logkit
 description: "A lightweight logging package for Flutter and Dart. Supports console and file logging with daily log rotation."
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/rahul-unity/logkit.git
 
 environment:
@@ -58,3 +58,10 @@ flutter:
   #
   # For details regarding fonts in packages, see
   # https://flutter.dev/to/font-from-package
+platforms:
+  android:
+  ios:
+  linux:
+  macos:
+  windows:
+  web:
