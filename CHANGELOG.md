@@ -1,3 +1,15 @@
+## [1.0.2] - 2025-02-05
+### 🛠 Static Analysis Cleanup
+- Suppressed deprecation warning for `dart:html` using `ignore_for_file`
+- Ran `dart format .` to fix file formatting issues
+
+## [1.0.1] - 2025-02-05
+### 🛠 Metadata Update & Platform Support
+
+- Declared **web platform compatibility** explicitly in `pubspec.yaml` using the `platforms:` section
+- This enables the `WEB` platform tag to appear on [pub.dev](https://pub.dev/packages/logkit)
+- No code changes, just metadata improvements for platform visibility
+
 ## [1.0.0] - 2025-02-05
 ### 🎉 Stable Release (Production Ready)
 

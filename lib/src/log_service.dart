@@ -4,8 +4,7 @@ import 'package:logger/logger.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 
-import 'log_export_stub.dart'
-if (dart.library.html) 'log_export_web.dart';
+import 'log_export_stub.dart' if (dart.library.html) 'log_export_web.dart';
 
 /// UISLogger provides logging functionality with persistent storage.
 class UISLogger {
@@ -34,7 +33,8 @@ class UISLogger {
   }
 
   void log(String message, {Level level = Level.info}) {
-    final logEntry = "[${DateTime.now().toIso8601String()}] [${level.name}] $message";
+    final logEntry =
+        "[${DateTime.now().toIso8601String()}] [${level.name}] $message";
     _logger.log(level, message);
     _logBox?.add(logEntry);
   }
@@ -56,7 +56,8 @@ class UISLogger {
     if (kIsWeb) return "Export to file is not supported in WebAssembly (WASM).";
 
     Directory directory = await getApplicationDocumentsDirectory();
-    String logFileName = "${DateTime.now().toIso8601String().split('T').first}.log";
+    String logFileName =
+        "${DateTime.now().toIso8601String().split('T').first}.log";
     File logFile = File('${directory.path}/$logFileName');
     StringBuffer logBuffer = StringBuffer();
 

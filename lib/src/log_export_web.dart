@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:convert';
 import 'dart:html' as html;
 
@@ -6,7 +8,8 @@ void exportLogsToWebDownload(List<String> logs) {
   final blob = html.Blob([bytes]);
   final url = html.Url.createObjectUrlFromBlob(blob);
   html.AnchorElement(href: url)
-    ..setAttribute('download', '${DateTime.now().toIso8601String().split('T').first}.log')
+    ..setAttribute(
+        'download', '${DateTime.now().toIso8601String().split('T').first}.log')
     ..click();
   html.Url.revokeObjectUrl(url);
 }
