@@ -79,4 +79,11 @@ class UISLogger {
   List<String> getAllLogs() {
     return _logBox?.values.cast<String>().toList() ?? [];
   }
+
+  Future<List<String>> getLatestLogs() async {
+    await _logBox?.close(); // Close the current box
+    _logBox = await Hive.openBox('logs'); // Reopen it
+    return _logBox?.values.cast<String>().toList() ?? [];
+  }
+
 }

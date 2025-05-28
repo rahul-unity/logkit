@@ -1,3 +1,10 @@
+## [1.0.3] - 2025-05-23
+
+### 🛠 Fixes & Enhancements
+- Fixed issue where newly logged entries were not shown in `getAllLogs()` by introducing `getLatestLogs()` with Hive reinitialization.
+- Added option to listen to log updates using `Hive.box('logs').listenable()` for real-time UI updates.
+- Improved documentation for web export and Hive behavior.
+- 
 ## [1.0.2] - 2025-02-05
 ### 🛠 Static Analysis Cleanup
 - Suppressed deprecation warning for `dart:html` using `ignore_for_file`
