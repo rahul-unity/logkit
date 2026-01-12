@@ -6,10 +6,10 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final logger = UISLogger();
-  await logger.initialize(); // Initialize Hive before logging
+  final logkit = LogKit();
+  await logkit.initialize(); // Initialize Hive before logging
 
-  logger.log("App started");
+  logkit.log("App started");
 
   runApp(const MyApp());
 }
@@ -56,7 +56,7 @@ class LoggerScreen extends StatelessWidget {
   }
 
   void _logRandomMessage() {
-    final logger = UISLogger();
+    final logkit = LogKit();
     final random = Random();
 
     // Define log levels
@@ -76,21 +76,21 @@ class LoggerScreen extends StatelessWidget {
     ];
 
     int index = random.nextInt(levels.length);
-    logger.log(messages[index], level: levels[index]);
+    logkit.log(messages[index], level: levels[index]);
   }
 
   Future<void> _exportLogs(BuildContext context) async {
-    final logger = UISLogger();
+    final logkit = LogKit();
 
     if (kIsWeb) {
-      logger.exportLogsToWeb();
+      logkit.exportLogsToWeb();
 
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Logs exported as download.")),
       );
     } else {
-      final path = await logger.exportLogsToFile();
+      final path = await logkit.exportLogsToFile();
 
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(

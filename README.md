@@ -55,8 +55,8 @@ Call `initialize()` before logging anything:
 ```dart
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final logger = UISLogger();
-  await logger.initialize(); // Required for Hive setup
+  final logkit = LogKit();
+  await logkit.initialize(); // Required for Hive setup
   runApp(const MyApp());
 }
 ```
@@ -64,11 +64,11 @@ void main() async {
 ### 🔹 Log Messages
 
 ```dart
-logger.log("This is an info message");  // Default level: info
+logkit.log("This is an info message");  // Default level: info
 
-logger.log("Debugging details...", level: Level.debug);
-logger.log("Warning message!", level: Level.warning);
-logger.log("Something went wrong!", level: Level.error);
+logkit.log("Debugging details...", level: Level.debug);
+logkit.log("Warning message!", level: Level.warning);
+logkit.log("Something went wrong!", level: Level.error);
 ```
 
 ### 🔹 Export Logs
@@ -76,20 +76,20 @@ logger.log("Something went wrong!", level: Level.error);
 #### 🖥️ On native platforms:
 
 ```dart
-String path = await logger.exportLogsToFile();
+String path = await logkit.exportLogsToFile();
 print("Logs exported to: $path");
 ```
 
 #### 🌐 On web:
 
 ```dart
-await logger.exportLogsToWebDownload(); // Triggers browser download
+await logkit.exportLogsToWebDownload(); // Triggers browser download
 ```
 
 ### 🔹 Get All Logs
 
 ```dart
-List<String> logs = logger.getAllLogs();
+List<String> logs = logkit.getAllLogs();
 logs.forEach(print);
 ```
 
@@ -103,9 +103,9 @@ import 'package:logkit/logkit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final logger = UISLogger();
-  await logger.initialize();
-  logger.log("App started!");
+  final logkit = LogKit();
+  await logkit.initialize();
+  logkit.log("App started!");
 
   runApp(const MyApp());
 }
@@ -121,8 +121,8 @@ class MyApp extends StatelessWidget {
         body: Center(
           child: ElevatedButton(
             onPressed: () {
-              final logger = UISLogger();
-              logger.log("Button clicked!", level: Level.info);
+              final logkit = LogKit();
+              logkit.log("Button clicked!", level: Level.info);
             },
             child: const Text("Log Message"),
           ),

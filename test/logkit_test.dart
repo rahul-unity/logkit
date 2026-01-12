@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('Logger should log messages', () {
-    // final logger = UISLogger();
-    //logger.log("Test message");
+    // final logkit = LogKit();
+    //logkit.log("Test message");
   });
 }

@@ -1,3 +1,12 @@
+## [2.0.0] - 2025-01-12
+
+### ⚠️ Breaking Changes
+- **Renamed `UISLogger` class to `LogKit`** - This is a breaking change. Update all references from `UISLogger()` to `LogKit()` in your code.
+- Updated all documentation and examples to reflect the new class name.
+
+### 🛠 Improvements
+- Improved naming consistency - the class name now matches the package name (LogKit).
+
 ## [1.0.3] - 2025-05-23
 
 ### 🛠 Fixes & Enhancements

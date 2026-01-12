@@ -6,15 +6,15 @@ import 'package:path_provider/path_provider.dart';
 
 import 'log_export_stub.dart' if (dart.library.html) 'log_export_web.dart';
 
-/// UISLogger provides logging functionality with persistent storage.
-class UISLogger {
-  static final UISLogger _instance = UISLogger._internal();
+/// LogKit provides logging functionality with persistent storage.
+class LogKit {
+  static final LogKit _instance = LogKit._internal();
   late Logger _logger;
   Box? _logBox;
 
-  factory UISLogger() => _instance;
+  factory LogKit() => _instance;
 
-  UISLogger._internal() {
+  LogKit._internal() {
     _logger = Logger(printer: PrettyPrinter());
   }
 
