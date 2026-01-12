@@ -1,4 +1,4 @@
-## [2.0.0] - 2025-01-12
+## [2.0.0] - 2026-01-12
 
 ### ⚠️ Breaking Changes
 - **Renamed `UISLogger` class to `LogKit`** - This is a breaking change. Update all references from `UISLogger()` to `LogKit()` in your code.

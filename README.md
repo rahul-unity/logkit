@@ -23,11 +23,15 @@ It supports **console logging**, **Hive-based persistent storage**, and log **ex
 
 ## 🛠️ Getting Started
 
+### ⚠️ Migrating from 1.x?
+
+If you're upgrading from LogKit 1.x, please check the [Migration Guide](MIGRATION_GUIDE.md) for breaking changes in version 2.0.0.
+
 ### 1️⃣ Add Dependency
 In your `pubspec.yaml`:
 ```yaml
 dependencies:
-  logkit: ^1.0.0  # Use the latest version
+  logkit: ^2.0.0  # Use the latest version
   hive: ^2.2.3
   path_provider: ^2.1.5
 ````
