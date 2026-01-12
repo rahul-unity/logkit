@@ -1,3 +1,10 @@
+## [2.0.1] - 2026-01-12
+
+### 📚 Documentation
+- Added comprehensive [Migration Guide](MIGRATION_GUIDE.md) for users upgrading from version 1.x to 2.0.0
+- Updated README.md with migration notice and improved getting started section
+- Enhanced documentation with step-by-step migration instructions
+
 ## [2.0.0] - 2026-01-12
 
 ### ⚠️ Breaking Changes

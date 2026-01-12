@@ -31,7 +31,7 @@ If you're upgrading from LogKit 1.x, please check the [Migration Guide](MIGRATIO
 In your `pubspec.yaml`:
 ```yaml
 dependencies:
-  logkit: ^2.0.0  # Use the latest version
+  logkit: ^2.0.1  # Use the latest version
   hive: ^2.2.3
   path_provider: ^2.1.5
 ````
